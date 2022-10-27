@@ -1,0 +1,27 @@
+- name: Required packages
+  dnf:
+    name:
+      - httpd
+      - mariadb-server
+      - mariadb
+      - php
+      - php-mysql
+    state: latest
+
+- name: Firewall ports
+  shell: |
+    sudo firewall-cmd --permanent --zone=public --add-service=http
+    sudo firewall-cmd --permanent --zone=public --add-service=https
+    sudo firewall-cmd --reload
+
+- name: httpd start
+  service:
+    name: httpd
+    state: started
+    enabled: true
+
+- name: mariadb start
+  service:
+    name: mariadb
+    state: started
+    enabled: true

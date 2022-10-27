@@ -1,0 +1,13 @@
+- name: Influxdb repository
+  unarchive:
+    src: https://dl.influxdata.com/influxdb/releases/influxdb2-2.4.0-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+    mode: 0777
+    owner: root
+    group: root
+
+- name: Influxdb to repository
+  shell:
+    cd /tmp/influxdb2*
+    sudo cp influxdb2-2.4.0-linux-amd64/influxd /usr/local/bin/
