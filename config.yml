@@ -1,0 +1,32 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Update repository index (CentOS)
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+  - name: Install updates (Ubuntu)
+    tags: always
+    apt:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: Ubuntu_remote
+  become: true
+  roles:
+    - ubuntu_prometheus
+    - Ubuntu_elk
+
+- hosts: CentOS_remote
+  become: true
+  roles:
+    - nagios
+    - centos_prometheus
+    - CentOS_elk
